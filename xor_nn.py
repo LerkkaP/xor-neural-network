@@ -2,10 +2,21 @@ import numpy as np
 
 class XorNet:
     def __init__(self):
+        # TODO
         pass
 
-    def hello_world(self):
-        return "Hello world!"
+    def _relu(self, x):
+        # TODO
+        pass
 
-model = XorNet()
-print(model.hello_world())
+    def _forward_propagation(self):
+        # TODO
+        pass
+
+    def _backpropagation(self):
+        # TODO
+        pass
+
+    def train_step(self):
+        # TODO
+        pass
