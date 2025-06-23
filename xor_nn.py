@@ -2,8 +2,12 @@ import numpy as np
 
 class XorNet:
     def __init__(self):
+        self._weights_hidden = np.random.rand(2, 2)
+        self._bias_hidden = np.random.rand(2)
+
+        self._weights_output = np.random.rand(1, 2)
+        self._bias_output = np.random.rand(1)
         # TODO
-        pass
 
     def _relu(self, x):
         # TODO

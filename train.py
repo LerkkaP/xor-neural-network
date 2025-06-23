@@ -3,8 +3,8 @@ from xor_nn import XorNet
 from visualizer import Visualizer
 
 def main():
-    training_data = np.array([(0, 0), (1, 1),
-                            (0, 1), (1, 0)])
+    training_data = np.array([[0, 0], [1, 1],
+                            [0, 1], [1, 0]])
     model = XorNet()
     visualizer = Visualizer()
     
