@@ -10,8 +10,7 @@ class XorNet:
         # TODO
 
     def _relu(self, x):
-        # TODO
-        pass
+        return np.maximum(0, x)
 
     def _forward_propagation(self):
         # TODO
