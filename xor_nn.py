@@ -2,14 +2,16 @@ import numpy as np
 
 class XorNet:
     def __init__(self):
-        self._weights_hidden = np.array([[1, 1], [1, 1]])
-        self._bias_hidden = np.array([0, -1])
+        self._weights_hidden = np.random.rand(2, 2)
+        self._bias_hidden = np.random.rand(2)
 
-        self._weights_output = np.array([[1, -2]])
-        self._bias_output = np.array([0])
+        self._weights_output = np.random.rand(1, 2)
+        self._bias_output = np.random.rand(1)
 
         self._hidden_layer_output = None
         self._output_layer_output = None
+
+        self._cost = None
 
     def _relu(self, x: np.ndarray):
         return np.maximum(0, x)
@@ -27,9 +29,15 @@ class XorNet:
         # TODO
         pass
 
-    def train_step(self, x: np.ndarray):
+    def _calculate_cost(self, y_true: np.ndarray, y_pred: np.ndarray):
+        cost = np.mean((y_true - y_pred) ** 2)
+        self._cost = cost
+        return cost
+
+    def train_step(self, x: np.ndarray, y_true: np.ndarray):
         output = self._forward_propagation(x)
-        return output
+        cost = self._calculate_cost(y_true, output)
+        return (output, cost)
 
     def predict(self, x: np.ndarray) -> np.ndarray:
         prediction = self._forward_propagation(x)
