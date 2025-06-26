@@ -16,6 +16,9 @@ class XorNet:
     def _relu(self, x: np.ndarray):
         return np.maximum(0, x)
 
+    def _relu_prime(self, x: np.ndarray):
+        return (x > 0).astype(float)
+
     def _forward_propagation(self, x: np.ndarray):
         z_hidden = np.dot(x, self._weights_hidden.T) + self._bias_hidden
         self._hidden_layer_output = self._relu(z_hidden)
