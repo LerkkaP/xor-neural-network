@@ -29,17 +29,28 @@ class XorNet:
         return self._output_layer_output
 
     def _backpropagation(self):
-        # TODO
+        # Gradients for the output layer
+        # dw5
+        # dw6
+        # db3
+
+        # Gradients for the hidden layer
+        # dw1
+        # dw2 
+        # dw3
+        # dw4
+        # db1
+        # db2
         pass
 
-    def _calculate_cost(self, y_true: np.ndarray, y_pred: np.ndarray):
+    def _cost_function(self, y_true: np.ndarray, y_pred: np.ndarray):
         cost = np.mean((y_true - y_pred) ** 2)
         self._cost = cost
         return cost
 
     def train_step(self, x: np.ndarray, y_true: np.ndarray):
         output = self._forward_propagation(x)
-        cost = self._calculate_cost(y_true, output)
+        cost = self._cost_function(y_true, output)
         return (output, cost)
 
     def predict(self, x: np.ndarray) -> np.ndarray:
