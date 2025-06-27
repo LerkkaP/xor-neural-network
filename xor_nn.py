@@ -12,6 +12,7 @@ class XorNet:
         self._output_layer_output = None
 
         self._cost = None
+        self._cost_prime = None
 
     def _relu(self, x: np.ndarray):
         return np.maximum(0, x)
@@ -47,6 +48,11 @@ class XorNet:
         cost = np.mean((y_true - y_pred) ** 2)
         self._cost = cost
         return cost
+    
+    def _cost_function_prime(self, y_true: np.ndarray, y_pred: np.ndarray):
+        cost_prime = np.mean(-2 * (y_true - y_pred))
+        self._cost_prime = cost_prime
+        return cost_prime
 
     def train_step(self, x: np.ndarray, y_true: np.ndarray):
         output = self._forward_propagation(x)
