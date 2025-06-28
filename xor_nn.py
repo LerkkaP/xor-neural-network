@@ -29,20 +29,13 @@ class XorNet:
     
         return self._output_layer_output
 
-    def _backpropagation(self):
+    def _backpropagation(self, y_true):
         # Gradients for the output layer
-        # dw5
-        # dw6
-        # db3
+        dc_dy_pred = self._cost_function_prime(y_true, self._hidden_layer_output)
+        dy_pred_dz = self._relu_prime(self._hidden_layer_output)
+        dc_dz = dc_dy_pred * dy_pred_dz
+        dc_dw = np.dot(dc_dz.T, self._hidden_layer_output)
 
-        # Gradients for the hidden layer
-        # dw1
-        # dw2 
-        # dw3
-        # dw4
-        # db1
-        # db2
-        pass
 
     def _cost_function(self, y_true: np.ndarray, y_pred: np.ndarray):
         cost = np.mean((y_true - y_pred) ** 2)
