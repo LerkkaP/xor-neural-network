@@ -45,6 +45,13 @@ class XorNet:
 
         self._update_weights(dc_dw, dc_db, dc_dw_hidden, dc_db_hidden)
 
+    def _sigmoid(self, x: np.ndarray):
+        return 1 / (1 + np.exp(-x))
+    
+    def _sigmoid_prime(self, x):
+        s = self._sigmoid(x)
+        return s * (1 - s)
+
     def _relu(self, x: np.ndarray):
         return np.maximum(0, x)
 
