@@ -43,7 +43,7 @@ class XorNet:
         dc_dw_hidden = np.dot(dc_dz_hidden.T, self._x)
         dc_db_hidden = np.sum(dc_dz_hidden, axis=0)      
 
-        return dc_dw, dc_db, dc_dw_hidden, dc_dw_hidden
+        self._update_weights(dc_dw, dc_db, dc_dw_hidden, dc_db_hidden)
 
     def _relu(self, x: np.ndarray):
         return np.maximum(0, x)
@@ -58,6 +58,12 @@ class XorNet:
     def _cost_function_prime(self, y_true: np.ndarray):
         cost_prime = np.mean(-2 * (y_true - self._o))
         return cost_prime
+    
+    def _update_weights(self, dc_dw, dc_db, dc_dw_hidden, dc_db_hidden, step_size = 0.1):
+        self._w_output -= step_size * dc_dw
+        self._b_output -= step_size * dc_db
+        self._w_hidden -= step_size * dc_dw_hidden
+        self._b_hidden -= step_size * dc_db_hidden
 
     def train_step(self, x: np.ndarray, y_true: np.ndarray):
         output = self._forward_propagation(x)
