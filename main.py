@@ -8,12 +8,11 @@ def main():
 
     model = XorNet()
     visualizer = Visualizer()
-
-    output, cost = model.train_step(training_data, labels)
-    print(output, cost)
-
-    print(visualizer.plot_decision_boundary())
-
+    array = []
+    for _ in range(10000):
+        output, cost = model.train_step(training_data, labels)
+        array.append((output, cost))
+    print(model.predict(training_data))
 
 if __name__ == "__main__":
     main()

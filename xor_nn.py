@@ -4,10 +4,10 @@ class XorNet:
     def __init__(self):
         self._x = None
 
-        self._w_hidden = np.random.rand(2, 2)
+        self._w_hidden = np.random.rand(2, 2) 
         self._b_hidden = np.random.rand(2)
 
-        self._w_output = np.random.rand(1, 2)
+        self._w_output = np.random.rand(1, 2) 
         self._b_output = np.random.rand(1)
 
         self._z_hidden = None # Linear part of hidden layer
@@ -28,7 +28,7 @@ class XorNet:
 
     def _backpropagation(self, y_true):
         # Gradients for the output layer
-        dc_do = self._cost_function_prime(y_true, self._o) # ∂c/∂o
+        dc_do = self._cost_function_prime(y_true) # ∂c/∂o
         do_dz = self._relu_prime(self._z_output) # ∂o/∂z
         dc_dz = dc_do * do_dz # ∂c/∂o · ∂o/∂z
 
@@ -56,7 +56,7 @@ class XorNet:
         return cost
     
     def _cost_function_prime(self, y_true: np.ndarray):
-        cost_prime = np.mean(-2 * (y_true - self._o))
+        cost_prime = 2 * (self._o - y_true) / y_true.shape[0]
         return cost_prime
     
     def _update_weights(self, dc_dw, dc_db, dc_dw_hidden, dc_db_hidden, step_size = 0.1):
@@ -67,7 +67,8 @@ class XorNet:
 
     def train_step(self, x: np.ndarray, y_true: np.ndarray):
         output = self._forward_propagation(x)
-        cost = self._cost_function(y_true, output)
+        self._backpropagation(y_true)  
+        cost = self._cost_function(y_true)
         return (output, cost)
 
     def predict(self, x: np.ndarray) -> np.ndarray:
