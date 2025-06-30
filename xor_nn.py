@@ -2,6 +2,8 @@ import numpy as np
 
 class XorNet:
     def __init__(self):
+        self._x = None
+
         self._w_hidden = np.random.rand(2, 2)
         self._b_hidden = np.random.rand(2)
 
@@ -15,6 +17,7 @@ class XorNet:
         self._o = None # Output of output layer
 
     def _forward_propagation(self, x: np.ndarray):
+        self._x = x
         self._z_hidden = np.dot(x, self._w_hidden.T) + self._b_hidden
         self._h = self._relu(self._z_hidden)
 
@@ -28,12 +31,19 @@ class XorNet:
         dc_do = self._cost_function_prime(y_true, self._o) # ∂c/∂o
         do_dz = self._relu_prime(self._z_output) # ∂o/∂z
         dc_dz = dc_do * do_dz # ∂c/∂o · ∂o/∂z
+
         dc_dw = np.dot(dc_dz.T, self._h) # ∂c/∂w = ∂c/∂o · ∂o/∂z · ∂z/∂w 
         dc_db = np.sum(dc_dz, axis=0) # ∂c/∂b
 
         # Gradients for the hidden layer
+        dc_dh = np.dot(dc_dz, self._w_output)
+        dh_dz_hidden = self._relu_prime(self._z_hidden)
+        dc_dz_hidden = dc_dh * dh_dz_hidden
+        
+        dc_dw_hidden = np.dot(dc_dz_hidden.T, self._x)
+        dc_db_hidden = np.sum(dc_dz_hidden, axis=0)      
 
-
+        return dc_dw, dc_db, dc_dw_hidden, dc_dw_hidden
 
     def _relu(self, x: np.ndarray):
         return np.maximum(0, x)
