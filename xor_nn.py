@@ -19,17 +19,20 @@ class XorNet:
     def _forward_propagation(self, x: np.ndarray):
         self._x = x
         self._z_hidden = np.dot(x, self._w_hidden.T) + self._b_hidden
-        self._h = self._relu(self._z_hidden)
+        self._h = self._sigmoid(self._z_hidden)
+        #self._h = self._relu(self._z_hidden)
 
         self._z_output = np.dot(self._h, self._w_output.T) + self._b_output
-        self._o = self._relu(self._z_output)
+        self._o = self._sigmoid(self._z_output)
+        #self._o = self._relu(self._z_output)
     
         return self._o
 
     def _backpropagation(self, y_true):
         # Gradients for the output layer
-        dc_do = self._cost_function_prime(y_true) # ∂c/∂o
-        do_dz = self._relu_prime(self._z_output) # ∂o/∂z
+        dc_do = self._bce_prime(y_true) # ∂c/∂o
+        do_dz = self._sigmoid_prime(self._z_output) # ∂o/∂z
+        #do_dz = self._relu_prime(self._z_output) # ∂o/∂z
         dc_dz = dc_do * do_dz # ∂c/∂o · ∂o/∂z
 
         dc_dw = np.dot(dc_dz.T, self._h) # ∂c/∂w = ∂c/∂o · ∂o/∂z · ∂z/∂w 
@@ -37,7 +40,8 @@ class XorNet:
 
         # Gradients for the hidden layer
         dc_dh = np.dot(dc_dz, self._w_output)
-        dh_dz_hidden = self._relu_prime(self._z_hidden)
+        dh_dz_hidden = self._sigmoid_prime(self._z_hidden)
+        #dh_dz_hidden = self._relu_prime(self._z_hidden)
         dc_dz_hidden = dc_dh * dh_dz_hidden
         
         dc_dw_hidden = np.dot(dc_dz_hidden.T, self._x)
@@ -67,7 +71,7 @@ class XorNet:
         return cost_prime
 
     def bce(self, y_true):
-        -np.mean(y_true * np.log(self._o) + (1 - y_true) * np.log(1 - self._o))
+        return -np.mean(y_true * np.log(self._o) + (1 - y_true) * np.log(1 - self._o))
 
     def _bce_prime(self, y_true: np.ndarray):
         return self._o - y_true 
@@ -81,7 +85,7 @@ class XorNet:
     def train_step(self, x: np.ndarray, y_true: np.ndarray):
         output = self._forward_propagation(x)
         self._backpropagation(y_true)  
-        cost = self._cost_function(y_true)
+        cost = self.bce(y_true)
         return (output, cost)
 
     def predict(self, x: np.ndarray) -> np.ndarray:
