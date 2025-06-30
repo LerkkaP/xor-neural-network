@@ -65,8 +65,14 @@ class XorNet:
     def _cost_function_prime(self, y_true: np.ndarray):
         cost_prime = 2 * (self._o - y_true) / y_true.shape[0]
         return cost_prime
-    
-    def _update_weights(self, dc_dw, dc_db, dc_dw_hidden, dc_db_hidden, step_size = 0.1):
+
+    def bce(self, y_true):
+        -np.mean(y_true * np.log(self._o) + (1 - y_true) * np.log(1 - self._o))
+
+    def _bce_prime(self, y_true: np.ndarray):
+        return self._o - y_true 
+
+    def _update_weights(self, dc_dw, dc_db, dc_dw_hidden, dc_db_hidden, step_size = 0.01):
         self._w_output -= step_size * dc_dw
         self._b_output -= step_size * dc_db
         self._w_hidden -= step_size * dc_dw_hidden

@@ -8,12 +8,12 @@ def main():
 
     model = XorNet()
     visualizer = Visualizer()
-    array = []
+    costs = []
     for i in range(10000):
         output, cost = model.train_step(training_data, labels)
         if i % 1000 == 0:
             print(f"Step {i}, cost: {cost}")
-        array.append((output, cost))
+        costs.append(cost)
     print(model.predict(training_data))
 
 if __name__ == "__main__":
