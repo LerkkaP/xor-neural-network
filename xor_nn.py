@@ -25,10 +25,15 @@ class XorNet:
 
     def _backpropagation(self, y_true):
         # Gradients for the output layer
-        dc_dy_pred = self._cost_function_prime(y_true, self._h)
-        dy_pred_dz = self._relu_prime(self._h)
-        dc_dz = dc_dy_pred * dy_pred_dz
-        dc_dw = np.dot(dc_dz.T, self._h)
+        dc_do = self._cost_function_prime(y_true, self._o) # ∂c/∂o
+        do_dz = self._relu_prime(self._z_output) # ∂o/∂z
+        dc_dz = dc_do * do_dz # ∂c/∂o · ∂o/∂z
+        dc_dw = np.dot(dc_dz.T, self._h) # ∂c/∂w = ∂c/∂o · ∂o/∂z · ∂z/∂w 
+        dc_db = np.sum(dc_dz, axis=0) # ∂c/∂b
+
+        # Gradients for the hidden layer
+
+
 
     def _relu(self, x: np.ndarray):
         return np.maximum(0, x)
