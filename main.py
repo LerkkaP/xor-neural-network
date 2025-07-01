@@ -10,7 +10,7 @@ def main():
     visualizer = Visualizer()
 
     costs = []
-    for _ in range(100000):
+    for _ in range(10000):
         output, cost = model.train_step(training_data, labels)
         costs.append(cost)
     print(model.predict(training_data))

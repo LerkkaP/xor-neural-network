@@ -76,7 +76,7 @@ class XorNet:
     def _bce_prime(self, y_true: np.ndarray):
         return self._o - y_true 
 
-    def _update_weights(self, dc_dw, dc_db, dc_dw_hidden, dc_db_hidden, step_size = 0.01):
+    def _update_weights(self, dc_dw, dc_db, dc_dw_hidden, dc_db_hidden, step_size = 0.1):
         self._w_output -= step_size * dc_dw
         self._b_output -= step_size * dc_db
         self._w_hidden -= step_size * dc_dw_hidden
