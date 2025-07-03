@@ -21,7 +21,8 @@ def main():
     visualizer.plot_loss(costs)
 
     f = model.construct_network_function()
-    
+    visualizer.plot_decision_boundary(f, training_data, labels)
+
 if __name__ == "__main__":
     main()
 

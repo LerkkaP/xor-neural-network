@@ -1,3 +1,4 @@
+import numpy as np
 import matplotlib.pyplot as plt
 
 class Visualizer:
@@ -14,16 +15,21 @@ class Visualizer:
         plt.close()
 
     @staticmethod
-    def plot_decision_boundary():
-        x = [0, 0, 1, 1]
-        y = [0, 1, 0, 1]
+    def plot_decision_boundary(f, training_data, labels):
+        xx, yy = np.meshgrid(np.linspace(-0.5, 1.5, 200), np.linspace(-0.5, 1.5, 200))
+        grid = np.c_[xx.ravel(), yy.ravel()]
+        zz = f(grid).reshape(xx.shape)
 
-        fig, ax = plt.subplots()
-        ax.scatter(x, y, color='red')
+        plt.figure(figsize=(6, 6))
+        plt.contourf(xx, yy, zz, levels=[0, 0.5, 1], colors=['#FFAAAA', '#AAAAFF'], alpha=0.6)
+        plt.contour(xx, yy, zz, levels=[0.5], colors='black')
 
-        plt.title("Decision boundary")
-        plt.xlabel("X-axis")
-        plt.ylabel("Y-axis")
-        plt.grid()
-
-        plt.show()
+        plt.scatter(training_data[:, 0], training_data[:, 1], c=labels.ravel(),
+                    cmap=plt.cm.RdBu, edgecolors='k', s=100)
+        plt.title("XOR Decision Boundary")
+        plt.xlabel("x1")
+        plt.ylabel("x2")
+        plt.grid(True)
+        plt.tight_layout()
+        plt.savefig("decision_boundary.png")
+        plt.close()
