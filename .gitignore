@@ -1,2 +1,3 @@
 __pycache__
-*.png
+decision_boundary.png
+loss_plot.png
