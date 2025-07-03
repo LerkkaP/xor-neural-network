@@ -3,6 +3,7 @@ from activations import Sigmoid, ReLU
 from costs import MSE, BCE
 from xor_nn import XorNet
 from visualizer import Visualizer
+import matplotlib.pyplot as plt
 
 def main():
     training_data = np.array([[0, 0], [1, 0],[0, 1], [1, 1]])
@@ -19,6 +20,8 @@ def main():
 
     visualizer.plot_loss(costs)
 
+    f = model.construct_network_function()
+    
 if __name__ == "__main__":
     main()
 

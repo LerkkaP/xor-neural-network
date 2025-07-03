@@ -63,3 +63,12 @@ class XorNet:
     def predict(self, x: np.ndarray) -> np.ndarray:
         prediction = self._forward_propagation(x)
         return prediction
+    
+    def construct_network_function(self):
+        def f(x):
+            z_hidden = np.dot(x, self._w_hidden.T) + self._b_hidden
+            h = self._activation(z_hidden)
+            z_output = np.dot(h, self._w_output.T) + self._b_output
+            o = self._activation(z_output)
+            return o
+        return f
