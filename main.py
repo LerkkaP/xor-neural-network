@@ -12,8 +12,10 @@ def main():
     model = XorNet(Sigmoid(), BCE())
     visualizer = Visualizer()
 
+    epochs = 100000
+
     costs = []
-    for _ in range(100000):
+    for _ in range(epochs):
         output, cost = model.train_step(training_data, labels)
         costs.append(cost)
     print(model.predict(training_data))
