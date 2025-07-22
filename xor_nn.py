@@ -31,12 +31,12 @@ class XorNet:
 
     def _backpropagation(self, y_true):
         # Gradients for the output layer
-        dc_do = self._cost.derivative(y_true, self._o) # ∂c/∂o
-        do_dz = self._activation.derivative(self._z_output) # ∂o/∂z
-        dc_dz = dc_do * do_dz # ∂c/∂o · ∂o/∂z
+        dc_do = self._cost.derivative(y_true, self._o)
+        do_dz = self._activation.derivative(self._z_output)
+        dc_dz = dc_do * do_dz
 
-        dc_dw = np.dot(dc_dz.T, self._h) # ∂c/∂w = ∂c/∂o · ∂o/∂z · ∂z/∂w 
-        dc_db = np.sum(dc_dz, axis=0) # ∂c/∂b
+        dc_dw = np.dot(dc_dz.T, self._h)
+        dc_db = np.sum(dc_dz, axis=0)
 
         # Gradients for the hidden layer
         dc_dh = np.dot(dc_dz, self._w_output)
