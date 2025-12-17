@@ -1,3 +1,7 @@
+# Neural network demonstration
+
+This repository contains an implementation of a simple neural network that solves the XOR problem. The network is written in Python using only NumPy library. The main motivation for this project was to learn the basics of backpropagation. Below is an image of the network implemented and formulas for the gradients used in backpropagation.
+
 ## Graphical representation of the neural network
 
 ![Image of the neural network](neural-network.png)
