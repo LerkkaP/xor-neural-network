@@ -1,3 +1,7 @@
+## Graphical representation of the neural network
+
+![Image of the neural network](neural-network.png)
+
 ## Gradients for the output layer
 
 $$
